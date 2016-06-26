@@ -1,0 +1,6 @@
+{
+  "name": "Kontrol",
+  "tagline": "Kontrol IOT MicroServices",
+  "body": "**Alpha v0.1**\r\n\r\n* Documentation will be availible just need time :)\r\n* Done some work with data models, modules etc.\r\n* Supports just Beaglebone for now.\r\n\r\n\r\n**Features:**\r\n\r\n* Twisted async \r\n* 3 Internal service bus\r\n* Event based json messaging.\r\n* Supports only mqtt for now.(COAP,SOAP,REST soon)\r\n* DS18b20,Bme280,Soilmoist module as examples.\r\n\r\n\r\n**Warning:** _This is preview version, its far from complete._\r\n_Also I wouldn't say no for some help :)_\r\nYuregir TEKELI\r\n_yuregir \"at\" me.com_\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
