@@ -1,15 +1,15 @@
-from Core import ServiceBase
 import json
+
+from Core import ServiceBase
 # change to smbus when uploading
 import smbus
 from twisted.logger import Logger
-from Kontrol.Drivers import DS18B20Sensor, BME280Sensor, ChirpSensor
 
 
 class DeviceManager(ServiceBase):
     log = Logger()
 
-    def __init__(self):
+    def __init__(self, config='./config.json'):
         # global log
         super(DeviceManager, self).__init__()
         self._name = 'Device Manager'
@@ -25,21 +25,30 @@ class DeviceManager(ServiceBase):
         self._IO_devices = {}
         self._drivers = {}
         self._state = 'Init'
+        self.config_file = config
         ##register callback to command bus
 
     def start(self):
 
         self._state = 'Start'
         self.log.info('Starting Core Services...')
+        # MAybe returning deferred maybe better option
+        self.config = self.load_config(self.config_file)
+        print("CONFIG", self.config)
+
 
     def status(self):
         return {'w1': self.get_w1_devices(), 'i2c': self.get_i2c_devices()}
 
     def load_config(self, config):
+        self.log.info('Loading Config...')
         try:
-            self._config = json.loads(config)
+            with open(config, 'r') as f:
+                data = json.load(f)
+                return data
         except Exception as e:
-            self.log.failure('Invalid config', failure=e)
+            self.log.debug("Config Error{err}", err=str(e.message))
+            return None
 
     def get_IO_devices(self):
         pass

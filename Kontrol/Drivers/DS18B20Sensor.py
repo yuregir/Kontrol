@@ -1,9 +1,9 @@
 import datetime
 
 from twisted.logger import Logger
+from w1thermsensor import W1ThermSensor
 
 from Kontrol.Services.Core import SensorBase
-from w1thermsensor import W1ThermSensor
 
 
 class DS18B20Sensor(SensorBase):
@@ -29,6 +29,7 @@ class DS18B20Sensor(SensorBase):
 
     def set_value(self, d):
         # TODO: assert value
+        self._container['event_type'] = 'measurement'
         self._container['measurement']['temperature']['value'] = ("%.2f" % d[0])
         self._container['measurement']['temperature']['time'] = d[1]
         return self._container

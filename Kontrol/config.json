@@ -1,0 +1,90 @@
+{
+  "device_config": {
+    "device_id": "1001",
+    "type": "BBG",
+    "organization": "test",
+    "location": {
+      "lat": 34.332,
+      "lon": 38.245,
+      "alt": 25
+    },
+    "metadata": ""
+  },
+  "mqtt_config": {
+    "server": "tcp:metrics.sipsunucu.com:1883",
+    "username": "1001"
+  },
+  "sensor_config": [
+    {
+      "driver": "Kontrol.drivers.DS18B20Sensor",
+      "id": "03146387eaff",
+      "tag": "Soil Temp 1",
+      "location": {
+        "lat": 34.332,
+        "lon": 38.245,
+        "alt": 25
+      }
+    },
+    {
+      "driver": "Kontrol.drivers.BME280Sensor",
+      "bus": 1,
+      "id": "0x22",
+      "tag": "Weather",
+      "location": {
+        "lat": 34.332,
+        "lon": 38.245,
+        "alt": 25
+      }
+    }
+  ],
+  "IO_config": {
+    "outputs": [
+      {
+        "pin": "P8_10",
+        "type": "output",
+        "invert": "True",
+        "name": "Generic Output 1"
+      },
+      {
+        "pin": "P8_11",
+        "type": "output",
+        "invert": "True",
+        "name": "Generic Output 2"
+      },
+      {
+        "pin": "P8_12",
+        "type": "output",
+        "invert": "True",
+        "name": "Generic Output 3"
+      },
+      {
+        "pin": "P8_13",
+        "type": "output",
+        "invert": "True",
+        "name": "Generic Output 4"
+      },
+      {
+        "pin": "P8_14",
+        "type": "output",
+        "invert": "True",
+        "name": "Generic Output 5"
+      }
+    ],
+    "inputs": [
+      {
+        "pin": "P8_15",
+        "type": "input",
+        "invert": "True",
+        "name": "Generic Input 1",
+        "debounce": 200
+      },
+      {
+        "pin": "P8_16",
+        "type": "input",
+        "invert": "True",
+        "name": "Generic Input 2",
+        "debounce": 200
+      }
+    ]
+  }
+}

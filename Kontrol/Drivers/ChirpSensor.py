@@ -1,10 +1,10 @@
 import datetime
+import smbus
+import time
 
 from twisted.logger import Logger
 
 from Kontrol.Services.Core import SensorBase
-import smbus
-import time
 
 
 class ChirpSensor(SensorBase):
@@ -63,8 +63,7 @@ class ChirpSensor(SensorBase):
 
     def set_value(self, d):
         # TODO: assert value
-        print 'SM incom: ', d
-        print 'SM cont: ', self._container
+        self._container['event_type'] = 'measurement'
         self._container['measurement']['soilmoisture']['value'] = ("%.2f" % d[0])
         self._container['measurement']['soilmoisture']['time'] = d[3]
         self._container['measurement']['temperature']['value'] = ("%.2f" % d[1])

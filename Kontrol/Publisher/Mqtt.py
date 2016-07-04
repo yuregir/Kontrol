@@ -1,8 +1,9 @@
-from twisted.logger import Logger
-from twisted.internet.defer import Deferred
-from twisted.application.internet import ClientService
-from Kontrol.Services.Core import PublisherBase
 import json
+
+from twisted.application.internet import ClientService
+from twisted.logger import Logger
+
+from Kontrol.Services.Core import PublisherBase
 
 
 # ----------------

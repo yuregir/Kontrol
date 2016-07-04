@@ -1,12 +1,10 @@
-from twisted.internet import threads
-from twisted.internet import reactor
-from twisted.internet.defer import Deferred
-
 import random
-import json
 import sys
 
 from cyrusbus import Bus
+from twisted.internet import reactor
+from twisted.internet import threads
+from twisted.internet.defer import Deferred
 
 
 class Singleton(type):
@@ -200,7 +198,8 @@ class SensorBase(ServiceBase):
                 'Service Status': self._state,
                 'Capabilities': self._capabilities.keys(),
                 'Health': [self._statics['Q_err'], self._statics['Q_suc']],
-                'Traffic in/out': [self._data_counter['in'], self._data_counter['out']]
+                'Traffic in/out': [self._data_counter['in'], self._data_counter['out']],
+                'Last Readings:': self.value
                 }
         return data
 

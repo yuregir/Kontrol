@@ -2,8 +2,8 @@ import datetime
 
 from twisted.logger import Logger
 
-from Kontrol.Services.Core import SensorBase
 from Kontrol.Drivers.Adafruit_BME280 import *
+from Kontrol.Services.Core import SensorBase
 
 
 class BME280Sensor(SensorBase):
@@ -11,7 +11,7 @@ class BME280Sensor(SensorBase):
 
     def __init__(self, bus=1, address=0x77, tag='Combined Weather Sensor'):
         super(BME280Sensor, self).__init__()
-        self._type = 'BME280'
+        self._sensor_type = 'BME280'
         self._i2c_bus = bus
         self._driver = BME280(mode=BME280_OSAMPLE_8)
         self._i2c_addr = address
@@ -19,7 +19,7 @@ class BME280Sensor(SensorBase):
         self._tag = tag
         self._id = str(self._i2c_bus) + str(self._i2c_addr)
         self._source = str(self)
-        self._container = dict(_id=self._id, _type=self._type, _name=self._name, _description=str(self),
+        self._container = dict(_id=self._id, _sensor_type=self._sensor_type, _name=self._name, _description=str(self),
                                measurement=dict(
                                    airhumidity=dict(value=None, time=None, units='%'),
                                    airtemperature=dict(value=None, time=None, units='C'),
@@ -28,7 +28,7 @@ class BME280Sensor(SensorBase):
     def set_value(self, d):
         # TODO: assert value
 
-
+        self._container['event_type'] = 'measurement'
         self._container['measurement']['airhumidity']['value'] = ("%.2f" % d[0])
         self._container['measurement']['airhumidity']['time'] = d[3]
         self._container['measurement']['airtemperature']['value'] = ("%.2f" % d[1])

@@ -1,13 +1,15 @@
-from Kontrol.Services.DeviceManager import DeviceManager
+import sys
+
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevelFilterPredicate, textFileLogObserver, FilteringLogObserver, \
     globalLogBeginner, LogLevel
-import sys
-from Kontrol.Drivers.DS18B20Sensor import DS18B20Sensor
+
 from Kontrol.Drivers.BME280Sensor import BME280Sensor
 from Kontrol.Drivers.ChirpSensor import ChirpSensor
-from Kontrol.Services.IOManager import DigitalOutput
+from Kontrol.Drivers.DS18B20Sensor import DS18B20Sensor
 from Kontrol.Publisher.Mqtt import MqttGatewayService
+from Kontrol.Services.DeviceManager import DeviceManager
+from Kontrol.Services.IOManager import DigitalOutput
 
 # ----------------------
 # Log Utility Functions

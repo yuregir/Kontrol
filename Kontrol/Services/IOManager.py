@@ -1,7 +1,9 @@
-from Kontrol.Services.Core import ServiceBase
-import Adafruit_BBIO.GPIO as GPIO
 import datetime
+
+import Adafruit_BBIO.GPIO as GPIO
 from twisted.logger import Logger
+
+from Kontrol.Services.Core import ServiceBase
 
 
 class DigitalOutput(ServiceBase):
