@@ -33,8 +33,8 @@ class DeviceManager(ServiceBase):
         self._state = 'Start'
         self.log.info('Starting Core Services...')
         # MAybe returning deferred maybe better option
-        self.config = self.load_config(self.config_file)
-        print("CONFIG", self.config)
+        print("CONFIG ", self.config)
+        ServiceBase.config = self.load_config(self.config_file)
 
 
     def status(self):

@@ -70,3 +70,15 @@ class MqttGatewayService(ClientService, PublisherBase):
         # serv = MqttGatewayService(myEndpoint, factory)
         # serv.whenConnected().addCallback(serv.gotProtocol)
         # serv.startService()
+
+    def connect(self):
+        from twisted.internet import reactor
+        from twisted.internet.endpoints import clientFromString
+
+        from mqtt.client.factory import MQTTFactory
+
+        factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
+        mqttEndpoint = clientFromString(reactor, self.config.mqtt.server)
+        serv = MqttGatewayService(mqttEndpoint, factory)
+        serv.whenConnected().addCallback(serv.gotProtocol)
+        serv.startService()

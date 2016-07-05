@@ -81,14 +81,8 @@ config_mqtt = {
 
 
 device = DeviceManager()
-temp1 = DS18B20Sensor('03146387eaff')
-comb = BME280Sensor()
-soil1 = ChirpSensor()
-do1 = DigitalOutput('P8_10')
+device.start()
 
-temp1.start()
-comb.start()
-soil1.start()
 mqtt_start()
 
 # startLogging()

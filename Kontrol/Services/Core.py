@@ -98,6 +98,7 @@ class EventBus(object):
 
 
 class ServiceBase(EventBus):
+    config = None
     def __init__(self):
         super(ServiceBase, self).__init__()
         self._type = "Service"

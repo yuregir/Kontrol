@@ -10,10 +10,7 @@
     },
     "metadata": ""
   },
-  "mqtt_config": {
-    "server": "tcp:metrics.sipsunucu.com:1883",
-    "username": "1001"
-  },
+
   "sensor_config": [
     {
       "driver": "Kontrol.drivers.DS18B20Sensor",
@@ -86,5 +83,12 @@
         "debounce": 200
       }
     ]
+  },
+  "mqtt_config": {
+    "server": "tcp:metrics.sipsunucu.com:1883",
+    "username": "1001",
+    "password": "1001",
+    "args": ""
+
   }
 }
