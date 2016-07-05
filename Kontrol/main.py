@@ -83,7 +83,8 @@ config_mqtt = {
 device = DeviceManager()
 device.start()
 
-mqtt_start()
+d = MqttGatewayService.connect()
+
 
 # startLogging()
 reactor.run()

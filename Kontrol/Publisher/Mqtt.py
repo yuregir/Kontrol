@@ -16,6 +16,7 @@ from Kontrol.Services.Core import PublisherBase
 class MqttGatewayService(ClientService, PublisherBase):
     log = Logger()
 
+    # TODO: Going to be removed from here!
     @staticmethod
     def deunicodify_hook(pairs):
         new_pairs = []
@@ -51,25 +52,10 @@ class MqttGatewayService(ClientService, PublisherBase):
 
     def handle_mqtt(self, data):
         print data
-
-
         # return data
 
     def printError(self, *args):
         self.log.debug("args={args!s}", args=args)
-
-        # def run():
-        #
-        #
-        # startLogging()
-        # setLogLevel(namespace='mqtt', levelStr='debug')
-        # setLogLevel(namespace='__main__', levelStr='debug')
-        #
-        # factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
-        # myEndpoint = clientFromString(reactor, "tcp:test.mosquitto.org:1883")
-        # serv = MqttGatewayService(myEndpoint, factory)
-        # serv.whenConnected().addCallback(serv.gotProtocol)
-        # serv.startService()
 
     def connect(self):
         from twisted.internet import reactor
