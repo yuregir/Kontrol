@@ -1,9 +1,7 @@
-Kontrol IOT 
+**Kontrol IOT**
 
 Documentation will be availible just need time :)
-
 Done some work with data models, modules etc.
-
 Supports just Beaglebone for now.
 
 

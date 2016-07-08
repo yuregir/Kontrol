@@ -9,12 +9,11 @@ from Kontrol.Services.Core import SensorBase
 class DS18B20Sensor(SensorBase):
     log = Logger()
 
-    def __init__(self, serial=0, tag='DS18B20'):
+    def __init__(self, id=0, tag='DS18B20'):
         super(DS18B20Sensor, self).__init__(tag)
-        self._serial = serial
-        self._type = 'DS18B10'
+        self._id = id
+        self._type = 'Temperature'
         self._name = tag
-        self._id = serial
         self._source = str(self)
 
         # TODO:Ok,I know what you're thinking:)
@@ -22,10 +21,10 @@ class DS18B20Sensor(SensorBase):
                                measurement=dict(temperature=dict(value=None,
                                                                  time=None, units='C')))
         try:
-            self._driver = W1ThermSensor(W1ThermSensor.THERM_SENSOR_DS18B20, serial)
-        except IOError as e:
+            self._driver = W1ThermSensor(W1ThermSensor.THERM_SENSOR_DS18B20, self._id)
+        except Exception as e:
             # TODO: handle
-            self.log.error(e)
+            self.log.error(e.message)
 
     def set_value(self, d):
         # TODO: assert value
@@ -39,4 +38,4 @@ class DS18B20Sensor(SensorBase):
         return self._return, str(datetime.datetime.today())
 
     def __repr__(self):
-        return "1-W Temperature Sensor with Serial %s" % self._serial
+        return "1-W Temperature Sensor with Serial %s" % self._id

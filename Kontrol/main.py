@@ -47,43 +47,28 @@ def setLogLevel(namespace=None, levelStr='debug'):
     logLevelFilterPredicate.setLogLevelForNamespace(namespace=namespace, level=level)
 
 
-def mqtt_start():
-    from twisted.internet.endpoints import clientFromString
+# def mqtt_start():
+#     from twisted.internet.endpoints import clientFromString
+#
+#     from mqtt.client.factory import MQTTFactory
+#     startLogging()
+#     factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
+#     myEndpoint = clientFromString(reactor, config_mqtt['server'])
+#     serv = MqttGatewayService(myEndpoint, factory)
+#     serv.whenConnected().addCallback(serv.gotProtocol)
+#    serv.startService()
 
-    from mqtt.client.factory import MQTTFactory
-    startLogging()
-    factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
-    myEndpoint = clientFromString(reactor, config_mqtt['server'])
-    serv = MqttGatewayService(myEndpoint, factory)
-    serv.whenConnected().addCallback(serv.gotProtocol)
-    serv.startService()
 
-
-# ------------
-#   Config
-# ------------
-
-config_dev = {
-    'device_id': '1001',
-    'type': 'BBG',
-    'organization': 'test',
-    '': ''
-}
-
-config_mqtt = {
-    'server': 'tcp:metrics.sipsunucu.com:1883',
-    'username': '1001'
-}
 
 # ------------
 #   API Init
 # ------------
 
-
-device = DeviceManager()
+startLogging()
+device = DeviceManager('config.json')
 device.start()
 
-d = MqttGatewayService.connect()
+reactor.callLater(5, MqttGatewayService.connect)
 
 
 # startLogging()

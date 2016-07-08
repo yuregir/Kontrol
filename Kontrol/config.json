@@ -1,5 +1,5 @@
 {
-  "device_config": {
+  "Global": {
     "device_id": "1001",
     "type": "BBG",
     "organization": "test",
@@ -10,10 +10,12 @@
     },
     "metadata": ""
   },
-
-  "sensor_config": [
+  "Device Manager": [
     {
-      "driver": "Kontrol.drivers.DS18B20Sensor",
+      "driver": "Kontrol.Drivers.DS18B20Sensor",
+      "args": [
+        "03146387eaff"
+      ],
       "id": "03146387eaff",
       "tag": "Soil Temp 1",
       "location": {
@@ -23,7 +25,11 @@
       }
     },
     {
-      "driver": "Kontrol.drivers.BME280Sensor",
+      "driver": "Kontrol.Drivers.BME280Sensor",
+      "args": [
+        1,
+        "0x22"
+      ],
       "bus": 1,
       "id": "0x22",
       "tag": "Weather",
@@ -34,7 +40,7 @@
       }
     }
   ],
-  "IO_config": {
+  "IO Manager": {
     "outputs": [
       {
         "pin": "P8_10",
@@ -84,7 +90,7 @@
       }
     ]
   },
-  "mqtt_config": {
+  "Mqtt Gateway": {
     "server": "tcp:metrics.sipsunucu.com:1883",
     "username": "1001",
     "password": "1001",

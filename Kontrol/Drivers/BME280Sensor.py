@@ -35,7 +35,7 @@ class BME280Sensor(SensorBase):
         self._container['measurement']['airtemperature']['time'] = d[3]
         self._container['measurement']['airpressure']['value'] = "%.2f" % (d[2] / 1000)
         self._container['measurement']['airpressure']['time'] = d[3]
-        self.log.debug(str(self._container))
+
         return self._container
 
     def _update(self):

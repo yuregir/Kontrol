@@ -30,25 +30,41 @@ class DeviceManager(ServiceBase):
 
     def start(self):
 
-        self._state = 'Start'
         self.log.info('Starting Core Services...')
         # MAybe returning deferred maybe better option
-        print("CONFIG ", self.config)
         ServiceBase.config = self.load_config(self.config_file)
+        print "*** - executing config"
+        self.execute_config()
 
+        print self.get_i2c_devices()
+        print self.get_w1_devices()
+        self._state = 'Started'
 
     def status(self):
         return {'w1': self.get_w1_devices(), 'i2c': self.get_i2c_devices()}
 
     def load_config(self, config):
         self.log.info('Loading Config...')
+
+        # TODO: Going to be removed from here!
+        def deunicodify_hook(pairs):
+            new_pairs = []
+            for key, value in pairs:
+                if isinstance(value, unicode):
+                    value = value.encode('utf-8')
+                if isinstance(key, unicode):
+                    key = key.encode('utf-8')
+                new_pairs.append((key, value))
+            return dict(new_pairs)
+
         try:
             with open(config, 'r') as f:
-                data = json.load(f)
+                data = json.load(f, object_pairs_hook=deunicodify_hook)
                 return data
         except Exception as e:
             self.log.debug("Config Error{err}", err=str(e.message))
             return None
+
 
     def get_IO_devices(self):
         pass
@@ -89,9 +105,11 @@ class DeviceManager(ServiceBase):
 
     def get_w1_devices(self):
         self.log.debug('Scanning for 1W devices.')
-        # for sensor in W1ThermSensor.get_available_sensors():
-        #    self._w1_devices[sensor.id] = {'id': sensor.id, 'type': '1-Wire device'}
-        # return self._w1_devices
+        from w1thermsensor import W1ThermSensor
+        for sensor in W1ThermSensor.get_available_sensors():
+            self._w1_devices[sensor.id] = {'id': sensor.id, 'type': '1-Wire device'}
+        return self._w1_devices
+
 
     # TODO: not completed
     def setup_w1_device(self, serial, driver='ds18b20'):

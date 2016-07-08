@@ -17,6 +17,7 @@ class MqttGatewayService(ClientService, PublisherBase):
     log = Logger()
 
     # TODO: Going to be removed from here!
+
     @staticmethod
     def deunicodify_hook(pairs):
         new_pairs = []
@@ -33,6 +34,8 @@ class MqttGatewayService(ClientService, PublisherBase):
         d = p.connect("TwistedMQTT-pubsubs", keepalive=0)
         d.addCallback(self.subscribe)
         PublisherBase.__init__(self)
+        # TODO: moveto better location
+        self._name = "Mqtt Gateway"
 
     def publish_payload(self, data):
         self.log.debug('event received to send : {event}', event=data)
@@ -57,14 +60,15 @@ class MqttGatewayService(ClientService, PublisherBase):
     def printError(self, *args):
         self.log.debug("args={args!s}", args=args)
 
-    def connect(self):
+    @classmethod
+    def connect(cls):
+        # TODO: Whole rework required
         from twisted.internet import reactor
         from twisted.internet.endpoints import clientFromString
-
         from mqtt.client.factory import MQTTFactory
 
         factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
-        mqttEndpoint = clientFromString(reactor, self.config.mqtt.server)
+        mqttEndpoint = clientFromString(reactor, cls.config["Mqtt Gateway"]['server'])
         serv = MqttGatewayService(mqttEndpoint, factory)
         serv.whenConnected().addCallback(serv.gotProtocol)
         serv.startService()

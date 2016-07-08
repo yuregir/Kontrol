@@ -5,7 +5,7 @@ from cyrusbus import Bus
 from twisted.internet import reactor
 from twisted.internet import threads
 from twisted.internet.defer import Deferred
-
+import importlib
 
 class Singleton(type):
     _instances = {}
@@ -104,8 +104,27 @@ class ServiceBase(EventBus):
         self._type = "Service"
         self._capabilities = {}
         self._data_counter = {"in": 0, "out": 0}
-
+        self._name = "Default"
         self._event_bus.register_commandbus(self.commandReceived)
+
+    def execute_config(self):
+        self.log.debug("Configuring sensors from config file...")
+        if not self.config[self._name]:
+            self.log.error("Cannot find configuration for {name} module in config file!")
+            return None
+        driver = []
+        for i in self.config[self._name]:
+            driver_name = i['driver'].split(".")[-1]
+            driver_module = i['driver']
+            print("dv mod: ", driver_module, "dv name: ", driver_name)
+            driver_import = importlib.import_module(driver_module, __package__)
+            driver_class = getattr(driver_import, driver_name)
+            driver.append(driver_class(*i['args']))
+        for sensor in driver:
+            sensor.start()
+
+
+            # return driver
 
     def data_in_counter(self, data):
         self._data_counter['in'] += sys.getsizeof(data)
