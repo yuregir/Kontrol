@@ -40,11 +40,11 @@ class MqttGatewayService(ClientService, PublisherBase):
     def publish_payload(self, data):
         self.log.debug('event received to send : {event}', event=data)
 
-        d = self.protocol.publish(topic="bbb/publish", message=json.dumps(data))
+        d = self.protocol.publish(topic="eventreceiver/1001", message=json.dumps(data))
         d.addErrback(self.printError)
 
     def subscribe(self, *args):
-        d = self.protocol.subscribe("bbb/command", 0)
+        d = self.protocol.subscribe("commandreceiver/1001/command", 0)
         self.protocol.setPublishHandler(self.onPublish)
 
     def onPublish(self, topic, payload, qos, dup, retain, msgId):

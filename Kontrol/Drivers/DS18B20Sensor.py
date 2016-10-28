@@ -17,7 +17,7 @@ class DS18B20Sensor(SensorBase):
         self._source = str(self)
 
         # TODO:Ok,I know what you're thinking:)
-        self._container = dict(_id=self._id, _type=self._type, _name=self._name, _description=str(self),
+        self._container = dict(_id=self._id, mtype=self._type, _name=self._name, _description=str(self),
                                measurement=dict(temperature=dict(value=None,
                                                                  time=None, units='C')))
         try:

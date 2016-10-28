@@ -1,6 +1,6 @@
 import json
 
-from Core import ServiceBase
+from Kontrol.Services.Core import ServiceBase
 # change to smbus when uploading
 import smbus
 from twisted.logger import Logger
@@ -31,7 +31,7 @@ class DeviceManager(ServiceBase):
     def start(self):
 
         self.log.info('Starting Core Services...')
-        # MAybe returning deferred maybe better option
+        #   deferred maybe better option
         ServiceBase.config = self.load_config(self.config_file)
         print "*** - executing config"
         self.execute_config()
