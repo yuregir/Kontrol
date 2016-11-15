@@ -30,7 +30,7 @@ __email__ = "yuregir@teke.li"
 __license__ = "Apache License, Version 2.0"
 
 
-class Eurotherm3500(minimalmodbus.Instrument):
+class MPC10Controller(minimalmodbus.Instrument):
     """Instrument class for MPC-10 process controller.
 
     Communicates via Modbus RTU protocol (via RS232 or RS485), using the *MinimalModbus* Python module.
@@ -128,7 +128,7 @@ class Eurotherm3500(minimalmodbus.Instrument):
 if __name__ == '__main__':
     minimalmodbus._print_out('TESTING MURPHY MPC-10 MODBUS MODULE')
 
-    a = Eurotherm3500('/dev/cvdHeatercontroller', 1)
+    a = MPC10Controller('/dev/ttyUSB0', 1)
     a.debug = False
 
     minimalmodbus._print_out('Engine RPM:          {0}'.format(a.get_engine_rpm()))
