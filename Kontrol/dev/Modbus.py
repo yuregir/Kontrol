@@ -25,7 +25,7 @@ Driver for the MPC-10 process controller, for communication via the Modbus RTU p
 
 import minimalmodbus
 
-__author__ = "Yuregir TEKELIg"
+__author__ = "Yuregir TEKELI"
 __email__ = "yuregir@teke.li"
 __license__ = "Apache License, Version 2.0"
 
