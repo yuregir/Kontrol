@@ -1,8 +1,8 @@
 {
   "Global": {
-    "device_id": "1001",
-    "type": "BBG",
-    "organization": "test",
+    "device_id": "4a00039fb0b0",
+    "device_type": "bbg",
+    "organization": "dev",
     "location": {
       "lat": 34.332,
       "lon": 38.245,

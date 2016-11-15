@@ -108,7 +108,7 @@ class ServiceBase(EventBus):
         self._event_bus.register_commandbus(self.commandReceived)
 
     def execute_config(self):
-        self.log.debug("Configuring sensors from config file...")
+        self.log.debug("Configuring device from config file...")
         if not self.config[self._name]:
             self.log.error("Cannot find configuration for {name} module in config file!")
             return None

@@ -10,16 +10,16 @@ from Kontrol.Services.Core import SensorBase
 class ChirpSensor(SensorBase):
     log = Logger()
 
-    def __init__(self, bus=1, address=0x20, tag='SoilMoist'):
+    def __init__(self, bus=1, address=0x20, tag='soilSensor'):
         super(ChirpSensor, self).__init__()
-        self._type = 'Chirp'
+        self._type = 'Soil'
         self._i2c_bus = bus
         self._driver = smbus.SMBus(bus)
         self._i2c_addr = address
         self._name = tag
         self._id = str(self._i2c_bus) + str(self._i2c_addr)
         self._source = str(self)
-        self._container = dict(_id=self._id, _type=self._type, _name=self._name, _description=str(self),
+        self._container = dict(_id=self._id, mtype=self._type, _name=self._name, _description=str(self),
                                measurement=dict(
                                    soilmoisture=dict(value=None, time=None, units='%'),
                                    temperature=dict(value=None, time=None, units='C'),

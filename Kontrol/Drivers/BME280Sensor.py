@@ -11,7 +11,7 @@ class BME280Sensor(SensorBase):
 
     def __init__(self, bus=1, address=0x77, tag='Combined Weather Sensor'):
         super(BME280Sensor, self).__init__()
-        self._type = 'Weather'
+        self._type = 'weatherSensor'
         self._i2c_bus = bus
         self._driver = BME280(mode=BME280_OSAMPLE_8)
         self._i2c_addr = address

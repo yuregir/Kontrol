@@ -12,7 +12,7 @@ class DS18B20Sensor(SensorBase):
     def __init__(self, id=0, tag='DS18B20'):
         super(DS18B20Sensor, self).__init__(tag)
         self._id = id
-        self._type = 'Temperature'
+        self._type = 'tempSensor'
         self._name = tag
         self._source = str(self)
 
