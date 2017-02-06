@@ -12,14 +12,10 @@ class DS18B20Sensor(SensorBase):
     def __init__(self, id=0, tag='DS18B20'):
         super(DS18B20Sensor, self).__init__(tag)
         self._id = id
-        self._type = 'tempSensor'
+        self._type = 'temperature'
         self._name = tag
         self._source = str(self)
-
-        # TODO:Ok,I know what you're thinking:)
-        self._container = dict(_id=self._id, mtype=self._type, _name=self._name, _description=str(self),
-                               measurement=dict(temperature=dict(value=None,
-                                                                 time=None, units='C')))
+        self._container = {}
         try:
             self._driver = W1ThermSensor(W1ThermSensor.THERM_SENSOR_DS18B20, self._id)
         except Exception as e:
@@ -28,13 +24,16 @@ class DS18B20Sensor(SensorBase):
 
     def set_value(self, d):
         # TODO: assert value
+        self.log.debug("DeBug:setting value: " + str(d))
         self._container['event_type'] = 'measurement'
-        self._container['measurement']['temperature']['value'] = ("%.2f" % d[0])
-        self._container['measurement']['temperature']['time'] = d[1]
+        self._container['temperature'] = ("%.2f" % d[0])
+        self._container['time'] = d[1]
+        print(self._container)
         return self._container
 
     def _update(self):
         self._return = self._driver.get_temperature()
+        self.log.debug(str(self._return))
         return self._return, str(datetime.datetime.today())
 
     def __repr__(self):

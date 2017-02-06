@@ -29,6 +29,10 @@ class EventBus(object):
         self._sensor_channel_key = 'sensor/'
         self._event_channel_key = 'event/'
         self._service_channel_key = 'command/'
+        # NEW
+        self._offline_channel_key = 'offline/'
+        self._online_channel_key = 'online/'
+
         # FIXME
         if not type(self)._event_bus:
             type(self)._event_bus = self
@@ -58,6 +62,14 @@ class EventBus(object):
     def get_logbus_services(self):
         return
 
+    def register_offlinebus(self, callback):
+        self._bus.subscribe(self._offline_channel_key, callback)
+        self.log.debug(' registered to offline bus.')
+
+    def register_onlinebus(self, callback):
+        self._bus.subscribe(self._online_channel_key, callback)
+        self.log.debug(' registered to online bus.')
+
     def register_sensorbus(self, callback):
         self._bus.subscribe(self._sensor_channel_key, callback)
         self.log.debug(' registered to sensor bus.')
@@ -83,6 +95,12 @@ class EventBus(object):
 
         self._bus.unsubscribe(channel, callback)
         self.log.debug('%s unregistered from %s') % (str(callback), channel)
+
+    def publish_offline(self, data):
+        self._bus.publish(self._offline_channel_key, data)
+
+    def publish_online(self, data):
+        self._bus.publish(self._online_channel_key, data)
 
     def publish_sensor(self, data):
         self._bus.publish(self._sensor_channel_key, data)
@@ -230,7 +248,7 @@ class SensorBase(ServiceBase):
             reactor.callLater(self._refresh, self._looping_poll_blocking)
         d = threads.deferToThread(self._update)
         d.addCallback(self.set_value)
-        d.addErrback(self._sensor_error)
+        #d.addErrback(self._sensor_error)
         d.addCallback(self._handle_success)
         d.addBoth(self.notify)
         return d

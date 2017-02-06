@@ -1,9 +1,14 @@
+
 import sys
+
+from os import path
+
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
 
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevelFilterPredicate, textFileLogObserver, FilteringLogObserver, \
     globalLogBeginner, LogLevel
-
 # from Kontrol.Drivers.BME280Sensor import BME280Sensor
 # from Kontrol.Drivers.ChirpSensor import ChirpSensor
 # from Kontrol.Drivers.DS18B20Sensor import DS18B20Sensor

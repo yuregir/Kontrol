@@ -19,22 +19,15 @@ class BME280Sensor(SensorBase):
         self._tag = tag
         self._id = str(self._i2c_bus) + str(self._i2c_addr)
         self._source = str(self)
-        self._container = dict(_id=self._id, mtype=self._type, _name=self._name, _description=str(self),
-                               measurement=dict(
-                                   airhumidity=dict(value=None, time=None, units='%'),
-                                   airtemperature=dict(value=None, time=None, units='C'),
-                                   airpressure=dict(value=None, time=None, units='KPa')))
 
     def set_value(self, d):
         # TODO: assert value
 
         self._container['event_type'] = 'measurement'
-        self._container['measurement']['airhumidity']['value'] = ("%.2f" % d[0])
-        self._container['measurement']['airhumidity']['time'] = d[3]
-        self._container['measurement']['airtemperature']['value'] = ("%.2f" % d[1])
-        self._container['measurement']['airtemperature']['time'] = d[3]
-        self._container['measurement']['airpressure']['value'] = "%.2f" % (d[2] / 1000)
-        self._container['measurement']['airpressure']['time'] = d[3]
+        self._container['airhumidity'] = ("%.2f" % d[0])
+        self._container['airtemperature'] = ("%.2f" % d[1])
+        self._container['airpressure'] = "%.2f" % (d[2] / 1000)
+        self._container['time'] = d[3]
 
         return self._container
 

@@ -40,19 +40,26 @@ class MqttGatewayService(ClientService, PublisherBase):
         return dict(new_pairs)
 
     def gotProtocol(self, p):
+        self.init_test()
+
+        self.dev_id = "1001"
+
         self.protocol = p
-        d = p.connect(self.dev_id, keepalive=0)
+        d = p.connect(self.dev_id, keepalive=60)
         d.addCallback(self.subscribe)
         PublisherBase.__init__(self)
         # TODO: moveto better location
         self._name = "Mqtt Gateway"
 
     def publish_payload(self, data):
+        print "MQTTData: ", data, type(data)
         self.log.debug('event received to send : {event}', event=data)
-        if type(data) == dict():
+
+        if type(data) == type(dict()):
             # not tested, test this if its working
-            enriched_data = data.update(self.config["Globals"])
-            d = self.protocol.publish(topic=self.topic_pub, message=json.dumps(enriched_data))
+            data.update(self.config["Globals"])
+
+            d = self.protocol.publish(topic=self.topic_pub, message=json.dumps(data))
             d.addErrback(self.printError)
         else:
             self.log.error("Publish Error: Payload isnt a json string")
